@@ -15,7 +15,7 @@ include KOF
 booths   = Booth  .open(booth_fn)
 seminars = Seminar.open(seminar_fn)
 
-groups = Group::read(group_fn)
+groups = open(group_fn){|f| Group::read(f)} rescue {}
 
 (booths + seminars).each do |b|
   g = Group.new(b.group, b.email)

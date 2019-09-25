@@ -20,9 +20,8 @@ module KOF
       false
     end
 
-    def self.read(fn)
-      open(fn, &:readlines)
-        .map{|l| l.strip.split(/\t/)}
+    def self.read(io)
+      io.map{|l| l.strip.split(/\t/)}
         .map{|id, name, email, booth, seminar, junku|
             booth   = nil  if booth&.empty?
             seminar = nil  if seminar&.empty?
@@ -39,6 +38,7 @@ end
 
 if $0 == __FILE__
   require 'test/unit'
+  require 'stringio'
 
   class TestGroup <Test::Unit::TestCase
     def test_new
@@ -79,15 +79,39 @@ if $0 == __FILE__
 
       assert_false KOF::Group.new("a", "a@a") == ["a", "a@a"]
     end
+
+    def test_read_1group
+      actual = KOF::Group.read(StringIO.new("1\talfa\tamail\t\t\t"))
+
+      expectation = {%w[alfa amail] => KOF::Group.new("alfa", "amail", 1)}
+      assert_equal expectation, actual
+    end
+
+    def test_read_2groups
+      actual = KOF::Group
+        .read(StringIO.new("2\tbravo\tbmail\t\t\tjunku\n3\tcharlie\tcmail\t\t\t"))
+      expectation = {
+        %w[bravo   bmail] => KOF::Group.new("bravo", "bmail", 2, nil, nil, "junku"),
+        %w[charlie cmail] => KOF::Group.new("charlie", "cmail", 3),
+      }
+      assert_equal expectation, actual
+    end
+
+    def test_read_empty
+      actual = KOF::Group.read(StringIO.new(""))
+
+      expectation = {}
+      assert_equal expectation, actual
+    end
   end
 end
 
-# >> Loaded suite /home/higaki/kof/KOFxJUNKUDO/KOF/xmpfilter.tmpfile_7732-1
+# >> Loaded suite /home/higaki/kof/KOFxJUNKUDO/KOF/xmpfilter.tmpfile_8012-1
 # >> Started
-# >> ..
-# >> Finished in 0.0009947 seconds.
+# >> .....
+# >> Finished in 0.0009738 seconds.
 # >> -------------------------------------------------------------------------------
-# >> 2 tests, 15 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+# >> 5 tests, 18 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 # >> 100% passed
 # >> -------------------------------------------------------------------------------
-# >> 2010.66 tests/s, 15079.92 assertions/s
+# >> 5134.52 tests/s, 18484.29 assertions/s

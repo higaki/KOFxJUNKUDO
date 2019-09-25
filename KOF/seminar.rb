@@ -5,9 +5,9 @@ require_relative './kof'
 module KOF
   using KOF
 
-  class Seminar < Kof
+  class Seminar
     def self.open(fn)
-      CSV.open(fn, @@io) do |csv|
+      CSV.open(fn, IO_ENCODINGS) do |csv|
         csv.inject([]) do |seminars, row|
           seminars << Seminar.new(*row)
         end

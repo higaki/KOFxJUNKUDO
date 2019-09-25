@@ -3,9 +3,10 @@
 require 'csv'
 
 module KOF
-  class Kof
-    @@io = {external_encoding: Encoding::UTF_8, internal_encoding: __ENCODING__}
-  end
+  IO_ENCODINGS = {
+    external_encoding: Encoding::UTF_8,
+    internal_encoding: __ENCODING__,
+  }
 
   def gen_id(gs, org)
     exists = gs.values.map(&:id)

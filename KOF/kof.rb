@@ -84,7 +84,7 @@ module KOF
       s
     end
 
-    def to_time
+    def to_times
       case self
       when %r|.*11/([89])|
           [Time.local(2019, 11, $1.to_i, 0, 0, 0)]

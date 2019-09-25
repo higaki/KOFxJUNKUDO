@@ -41,6 +41,21 @@ if $0 == __FILE__
   require 'test/unit'
 
   class TestGroup <Test::Unit::TestCase
+    def test_new
+      [ ["a", "a@a", nil, nil, nil, nil, KOF::Group.new("a", "a@a")],
+        ["a", "a@a", nil, nil, nil, nil, KOF::Group.new("a", "a@a", nil, nil, nil, nil)],
+        ["a", "a@a",   1, nil, nil, nil, KOF::Group.new("a", "a@a", 1)],
+        ["a", "a@a",   1, nil, nil, nil, KOF::Group.new("a", "a@a", "1")],
+        ["a", "a@a", nil,   2, nil, nil, KOF::Group.new("a", "a@a", nil, 2)],
+        ["a", "a@a", nil, nil,   3, nil, KOF::Group.new("a", "a@a", nil, nil, 3)],
+        ["a", "a@a", nil, nil, nil,   4, KOF::Group.new("a", "a@a", nil, nil, nil, 4)],
+      ].each do |i|
+        actual = KOF::Group.new(*[*0..5].map{|j|i[j]})
+        expectation = i.last
+        assert_equal expectation, actual
+      end
+    end
+
     def test_equal
       [ ["a", "a@a", nil, nil, nil, nil,
          "a", "a@a", nil, nil, nil, nil,  true],
@@ -67,12 +82,12 @@ if $0 == __FILE__
   end
 end
 
-# >> Loaded suite /home/higaki/kof/KOFxJUNKUDO/KOF/xmpfilter.tmpfile_7588-1
+# >> Loaded suite /home/higaki/kof/KOFxJUNKUDO/KOF/xmpfilter.tmpfile_7732-1
 # >> Started
 # >> ..
-# >> Finished in 0.0007476 seconds.
+# >> Finished in 0.0009947 seconds.
 # >> -------------------------------------------------------------------------------
-# >> 2 tests, 13 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+# >> 2 tests, 15 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 # >> 100% passed
 # >> -------------------------------------------------------------------------------
-# >> 2675.23 tests/s, 17388.98 assertions/s
+# >> 2010.66 tests/s, 15079.92 assertions/s

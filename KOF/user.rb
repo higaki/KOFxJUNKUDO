@@ -54,7 +54,7 @@ if $0 == __FILE__
       ].each do |i|
         lhs = KOF::User.new(*[*0..2].map{|j|i[j]})
         rhs = KOF::User.new(*[*3..5].map{|j|i[j]})
-        assert_equal lhs == rhs, i.last, i
+        assert_equal i.last, lhs == rhs, i
       end
 
       assert_false KOF::User.new("a", "a@a") == ["a", "a@a"]
@@ -85,12 +85,12 @@ if $0 == __FILE__
   end
 end
 
-# >> Loaded suite /home/higaki/kof/KOFxJUNKUDO/KOF/xmpfilter.tmpfile_7291-1
+# >> Loaded suite /home/higaki/kof/KOFxJUNKUDO/KOF/xmpfilter.tmpfile_7400-1
 # >> Started
 # >> .....
-# >> Finished in 0.0011827 seconds.
+# >> Finished in 0.0014061 seconds.
 # >> -------------------------------------------------------------------------------
 # >> 5 tests, 23 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 # >> 100% passed
 # >> -------------------------------------------------------------------------------
-# >> 4227.61 tests/s, 19447.03 assertions/s
+# >> 3555.93 tests/s, 16357.30 assertions/s

@@ -1,7 +1,6 @@
 #! /usr/bin/env ruby
 
 require_relative './kof'
-require_relative './regularize'
 
 module KOF
   using KOF

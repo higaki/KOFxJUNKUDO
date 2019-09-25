@@ -10,6 +10,8 @@ module KOF
 
     def == o
       [id, name, email] == [o.id, o.name, o.email]
+    rescue
+      false
     end
 
     def self.read(fn)
@@ -53,16 +55,18 @@ if $0 == __FILE__
         rhs = KOF::User.new(*[*3..5].map{|j|i[j]})
         assert_equal lhs == rhs, i.last, i
       end
+
+      assert_false KOF::User.new("a", "a@a") == ["a", "a@a"]
     end
   end
 end
 
-# >> Loaded suite /home/higaki/kof/KOFxJUNKUDO/KOF/xmpfilter.tmpfile_6706-1
+# >> Loaded suite /home/higaki/kof/KOFxJUNKUDO/KOF/xmpfilter.tmpfile_6836-1
 # >> Started
 # >> ..
-# >> Finished in 0.0009387 seconds.
+# >> Finished in 0.0007981 seconds.
 # >> -------------------------------------------------------------------------------
-# >> 2 tests, 19 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+# >> 2 tests, 20 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 # >> 100% passed
 # >> -------------------------------------------------------------------------------
-# >> 2130.61 tests/s, 20240.76 assertions/s
+# >> 2505.95 tests/s, 25059.52 assertions/s

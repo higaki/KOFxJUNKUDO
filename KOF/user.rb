@@ -14,8 +14,8 @@ module KOF
       false
     end
 
-    def self.read(fn)
-      open(fn, &:readlines)
+    def self.read(io)
+      io.readlines
         .map{|l| l.strip.split(/\t/)}
         .map{|id, name, email| KOF::User.new(name, email, id)}
         .inject({}){|us, u| us[u.email] = u; us}
@@ -28,6 +28,7 @@ end
 
 if $0 == __FILE__
   require 'test/unit'
+  require 'stringio'
 
   class TestUser <Test::Unit::TestCase
     def test_new
@@ -58,15 +59,38 @@ if $0 == __FILE__
 
       assert_false KOF::User.new("a", "a@a") == ["a", "a@a"]
     end
+
+    def test_read_1user
+      actual = KOF::User.read(StringIO.new("1\tname\temail"))
+
+      expectation = {"email" => KOF::User.new("name", "email", 1)}
+      assert_equal expectation, actual
+    end
+
+    def test_read_2users
+      actual = KOF::User.read(StringIO.new("2\tbravo\tbmail\n3\tcharlie\tcmail"))
+      expectation = {
+        "bmail" => KOF::User.new("bravo",   "bmail", 2),
+        "cmail" => KOF::User.new("charlie", "cmail", 3),
+      }
+      assert_equal expectation, actual
+    end
+
+    def test_read_empty
+      actual = KOF::User.read(StringIO.new(""))
+
+      expectation = {}
+      assert_equal expectation, actual
+    end
   end
 end
 
-# >> Loaded suite /home/higaki/kof/KOFxJUNKUDO/KOF/xmpfilter.tmpfile_6836-1
+# >> Loaded suite /home/higaki/kof/KOFxJUNKUDO/KOF/xmpfilter.tmpfile_7291-1
 # >> Started
-# >> ..
-# >> Finished in 0.0007981 seconds.
+# >> .....
+# >> Finished in 0.0011827 seconds.
 # >> -------------------------------------------------------------------------------
-# >> 2 tests, 20 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+# >> 5 tests, 23 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 # >> 100% passed
 # >> -------------------------------------------------------------------------------
-# >> 2505.95 tests/s, 25059.52 assertions/s
+# >> 4227.61 tests/s, 19447.03 assertions/s

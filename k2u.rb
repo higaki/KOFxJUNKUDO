@@ -15,7 +15,7 @@ seminar_fn = ARGV[1]
 booths   = Booth  .open(booth_fn)
 seminars = Seminar.open(seminar_fn)
 
-users = User::read(user_fn)
+users = open(user_fn){|f|User::read(f)} rescue {}
 
 (booths + seminars).each do |b|
   u = User.new(b.user, b.email)

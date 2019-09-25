@@ -16,7 +16,7 @@ module KOF
 
     def initialize(group, user, email, title, abstract, talker, preferred_date, scale, appendix,date, room)
       @group, @user, @email, @title, @abstract, @talker, @preferred_date, @scale, @appendix, @date, @room =
-        group.regularize, user.regularize, email, title, abstract, talker, to_time(preferred_date), scale, appendix, to_time(date), room
+        group.regularize, user.regularize, email, title, abstract, talker, preferred_date.to_time, scale, appendix, date.to_time, room
     end
 
     attr_reader :group, :user, :email, :preferred_date

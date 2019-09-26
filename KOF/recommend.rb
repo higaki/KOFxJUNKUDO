@@ -14,12 +14,17 @@ module KOF
     rescue
       false
     end
+
+    def self.read(io)
+      io.readlines.map{|l| Recommendation.new(*l.strip.split(/\t/))}
+    end
   end
 end
 
 
 if $0 == __FILE__
   require 'test/unit'
+  require 'stringio'
 
   class TestRecommendation <Test::Unit::TestCase
     def test_new
@@ -50,15 +55,42 @@ if $0 == __FILE__
 
       assert_false KOF::Recommendation.new(1, "401X", "alfa", nil) == [1, "401X", "alfa", nil]
     end
+
+    def test_read_1recommendation
+      actual = KOF::Recommendation.read(StringIO.new("1\t9784774193977\tひがき\t"))
+      expectation = [KOF::Recommendation.new(1, "9784774193977", "ひがき", nil)]
+      assert_equal expectation, actual
+    end
+
+    def test_read_3recommendations
+      src = [
+        [1, 9784774193977, "ひがき",   ""],
+        [2, 9784862464149, "古賀海人", "古賀海人"],
+        [3, 9784904807002, "",         ""],
+      ].map{|r| r.join("\t")}.join("\n")
+      actual = KOF::Recommendation.read(StringIO.new(src))
+      expectation = [
+        KOF::Recommendation.new(1, "9784774193977", "ひがき"),
+        KOF::Recommendation.new(2, "9784862464149", "古賀海人", "古賀海人"),
+        KOF::Recommendation.new(3, "9784904807002"),
+      ]
+      assert_equal expectation, actual
+    end
+
+    def test_read_empty
+      actual = KOF::Recommendation.read(StringIO.new(""))
+      expectation = []
+      assert_equal expectation, actual
+    end
   end
 end
 
-# >> Loaded suite /home/higaki/kof/KOFxJUNKUDO/KOF/xmpfilter.tmpfile_3301-1
+# >> Loaded suite /home/higaki/kof/KOFxJUNKUDO/KOF/xmpfilter.tmpfile_4258-1
 # >> Started
-# >> ..
-# >> Finished in 0.0004818 seconds.
+# >> .....
+# >> Finished in 0.0010908 seconds.
 # >> -------------------------------------------------------------------------------
-# >> 2 tests, 26 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+# >> 5 tests, 29 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 # >> 100% passed
 # >> -------------------------------------------------------------------------------
-# >> 4151.10 tests/s, 53964.30 assertions/s
+# >> 4583.79 tests/s, 26585.99 assertions/s

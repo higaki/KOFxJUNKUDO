@@ -22,4 +22,4 @@ def output_tsv(f, gs)
   f.puts gs.values.map{|g| to_tsv(g)}
 end
 
-output_tsv STDOUT, KOF::Group::read(group_fn)
+output_tsv STDOUT, open(group_fn){|f| KOF::Group::read(f)}

@@ -8,7 +8,7 @@ Encoding.default_external = Encoding::UTF_8
 
 include KOF
 
-user_fn    = "user.tsv"
+user_fn    = "users.tsv"
 booth_fn   = ARGV[0]
 seminar_fn = ARGV[1]
 

@@ -3,7 +3,7 @@
 module KOF
   class Book
     def initialize(isbn, title, url)
-      @isbn, @title, @url = isbn.gsub('-', '').upcase, title, url
+      @isbn, @title, @url = isbn.gsub('-', '').upcase, title || '', url || ''
     end
 
     attr_accessor :isbn, :title, :url
@@ -20,6 +20,12 @@ module KOF
         .inject({}){|bs, b| bs[b.isbn] = b; bs}
     rescue SystemCallError
       {}
+    end
+
+    def self.add(isbn, books)
+      isbn = isbn.gsub('-', '').upcase
+      books[isbn] = Book.new(isbn, '', '') unless books.include? isbn
+      books[isbn]
     end
   end
 end
@@ -77,15 +83,56 @@ if $0 == __FILE__
       expectation = {}
       assert_equal expectation, actual
     end
+
+    def test_add
+      books = {}
+      KOF::Book.add("978-4-7741-9397-7", books);
+      KOF::Book.add("978-4-86246-414-9", books);
+
+      expectations = %w[9784774193977 9784862464149]
+
+      assert_equal expectations, books.keys
+      expectations.each do |isbn|
+        book = books[isbn]
+        assert_equal isbn, book.isbn
+        assert_equal "",   book.title
+        assert_equal "",   book.url
+      end
+    end
+
+    def test_add_already_exists
+      books = {
+        "9784774193977" => KOF::Book.new("9784774193977", "プロを目指す人のための Ruby 入門", "https://honto.jp/netstore/pd-book_28745880.html"),
+        "9784862464149" => KOF::Book.new("9784862464149", "クリエイターのための権利の本", "https://honto.jp/netstore/pd-book_29253824.html"),
+      }
+
+      assert_not_equal "", books["9784774193977"].title
+      assert_not_equal "", books["9784862464149"].url
+
+      KOF::Book.add("9784774193977",     books);
+      KOF::Book.add("978-4-7741-9397-7", books);
+      KOF::Book.add("9784862464149",     books);
+      KOF::Book.add("978-4-86246-414-9", books);
+
+      expectations = %w[9784774193977 9784862464149]
+
+      assert_equal expectations, books.keys
+      expectations.each do |isbn|
+        book = books[isbn]
+        assert_equal   isbn, book.isbn
+        assert_not_equal "", book.title, "do NOT overwrite"
+        assert_not_equal "", book.url,   "do NOT overwrite"
+      end
+    end
   end
 end
 
-# >> Loaded suite /home/higaki/kof/KOFxJUNKUDO/KOF/xmpfilter.tmpfile_3130-1
+# >> Loaded suite /home/higaki/kof/KOFxJUNKUDO/KOF/xmpfilter.tmpfile_2403-1
 # >> Started
-# >> .....
-# >> Finished in 0.0007351 seconds.
+# >> .......
+# >> Finished in 0.0017355 seconds.
 # >> -------------------------------------------------------------------------------
-# >> 5 tests, 21 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+# >> 7 tests, 37 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 # >> 100% passed
 # >> -------------------------------------------------------------------------------
-# >> 6801.80 tests/s, 28567.54 assertions/s
+# >> 4033.42 tests/s, 21319.50 assertions/s

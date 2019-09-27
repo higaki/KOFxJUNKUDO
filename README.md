@@ -30,7 +30,13 @@ $ greet.rb
 
 ## 書籍登録
 
+```
+$ add.rb ISBN [ISBN ...]
+```
+
 `books.tsv` に書籍を登録
+
+タイトル・URL は手作業で登録
 
 
 ## 推薦登録

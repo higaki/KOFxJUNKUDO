@@ -1,10 +1,9 @@
 #! /usr/bin/env ruby
 
+require_relative './KOF/kof'
 require_relative './KOF/group'
 
 Encoding.default_external = Encoding::UTF_8
-
-group_fn   = "groups.tsv"
 
 def to_tsv(g)
   base = "https://k-of.jp/backend/session"
@@ -22,4 +21,4 @@ def output_tsv(f, gs)
   f.puts gs.values.map{|g| to_tsv(g)}
 end
 
-output_tsv STDOUT, open(group_fn){|f| KOF::Group::read(f)}
+output_tsv STDOUT, open(KOF::FILE_OF[:group]){|f| KOF::Group::read(f)}

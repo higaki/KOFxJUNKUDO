@@ -8,6 +8,13 @@ module KOF
     internal_encoding: __ENCODING__,
   }
 
+  FILE_OF = {
+    group: ",/groups.tsv",
+    user:  ",/users.tsv",
+    book:  "books.tsv",
+    recommend: "recommendations.tsv",
+  }
+
   def gen_id(gs, org)
     exists = gs.values.map(&:id)
     (org..).lazy.find{|i| !exists.include?(i)}

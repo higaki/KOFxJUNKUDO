@@ -10,9 +10,9 @@ def to_tsv(g)
   [
     g.id,
     g.name,
-    g.booth.nil?   ? "" : [base, g.booth  ].join("/"),
-    g.seminar.nil? ? "" : [base, g.seminar].join("/"),
-    g.junku.nil?   ? "" : [base, g.junku  ].join("/"),
+    g.booth.nil?   ? "" : %|=HYPERLINK(#{[base, g.booth  ].join("/")},"○")|,
+    g.seminar.nil? ? "" : %|=HYPERLINK(#{[base, g.seminar].join("/")},"○")|,
+    g.junku.nil?   ? "" : %|=HYPERLINK(#{[base, g.junku  ].join("/")},"○")|,
   ].join("\t")
 end
 

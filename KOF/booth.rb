@@ -19,7 +19,7 @@ module KOF
         group.regularize, user.regularize, email, abstract, dates.to_times, appendix
     end
 
-    attr_reader :group, :user, :email, :dates
+    attr_reader :group, :user, :email, :abstract, :dates
   end
 end
 

@@ -94,8 +94,10 @@ module KOF
 
     def to_times
       case self
-      when %r|.*11/([89])|
-          [Time.local(2019, 11, $1.to_i, 0, 0, 0)]
+      when %r|.*11/8|
+        [Time.local(2019, 11, 8, 0, 0, 0), nil]
+      when %r|.*11/9|
+        [nil, Time.local(2019, 11, 9, 0, 0, 0)]
       when /両日|どちらの日でもよい/
         [8, 9].map{|i| Time.local(2019, 11, i, 0, 0, 0)}
       end

@@ -10,14 +10,14 @@ def to_tsv(g)
   [
     g.id,
     g.name,
-    g.booth.nil?   ? "" : %|=HYPERLINK(#{[base, g.booth  ].join("/")},"○")|,
-    g.seminar.nil? ? "" : %|=HYPERLINK(#{[base, g.seminar].join("/")},"○")|,
-    g.junku.nil?   ? "" : %|=HYPERLINK(#{[base, g.junku  ].join("/")},"○")|,
+    g.booth.nil?   ? "" : %|=HYPERLINK("#{[base, g.booth  ].join("/")}","○")|,
+    g.seminar.nil? ? "" : %|=HYPERLINK("#{[base, g.seminar].join("/")}","○")|,
+    g.junku.nil?   ? "" : %|=HYPERLINK("#{[base, g.junku  ].join("/")}","○")|,
   ].join("\t")
 end
 
 def output_tsv(f, gs)
-  f.puts %w[No. グループ ブース セミナー 書籍紹介].join("\t")
+  f.puts %w[No. グループ ブース セミナー 書籍紹介].join("\t")
   f.puts gs.values.map{|g| to_tsv(g)}
 end
 

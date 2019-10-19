@@ -43,8 +43,9 @@ puts <<HEAD
 HEAD
 
 open(KOF::FILE_OF[:recommend]){|f| KOF::Recommendation.read(f)}
+  .reject{|r| r.gid > 9000}     # trick
   .group_by{|r| r.gid}
-  .sort_by{|g| groups[g.first].name}
+  .sort_by{|g| groups[g.first].name.upcase}
   .each_with_index {|(gid, rs), i| tr groups[gid].name, rs.map{|r| books[r.isbn]}, i % 2 == 0}
 
 puts <<FOOT

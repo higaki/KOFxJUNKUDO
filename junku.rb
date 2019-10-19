@@ -19,19 +19,30 @@ booth_by = KOF::Booth.open(ARGV[0])
 seminar_by = KOF::Seminar.open(ARGV[1])
   .inject({}){|ss, s| ss[[s.group, s.email]] = s; ss}
 
+class String
+  def isbn
+    case size
+    when 13 then [$1, $2, $3, $4, $5].join("-") if /(\d{3})(\d)(\d{4})(\d{4})(\d)/ =~ self
+    when  7 then [$1, $2].join("-") if /(\d{5})(\d{2})/ =~ self
+    else         self
+    end
+  end
+end
 
+puts ["", "", "", "", "", "", "ブース", "", "セミナー", "", "書籍紹介"].join("\t")
+puts %w[No. 出版社 ISBN/雑誌コード タイトル id コミュニティ 11/7 11/8 11/7 11/8 11/7 11/8 サイン会].join("\t")
 recommendations.each_with_index do |rec, i|
   group   = group_by[rec.gid]
   book    = books[rec.isbn]
   booth   = booth_by[group.key]
   seminar = seminar_by[group.key]
   columns = [
-    rec.gid,
     i + 1,
-    group.name,
-    rec.isbn,
     book.publisher,
+    %Q|"#{rec.isbn.to_s.isbn}"|,
     book.to_hyperlink,
+    rec.gid,
+    group.name,
     booth ? booth.to_hyperlink(group.booth) : ["", ""],
     seminar ? seminar.to_hyperlink(group.seminar) : ["", ""],
   ]

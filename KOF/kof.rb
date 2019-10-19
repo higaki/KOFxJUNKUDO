@@ -15,6 +15,8 @@ module KOF
     recommend: "recommendations.tsv",
   }
 
+  URL_BASE = "https://k-of.jp/backend/session"
+
   def gen_id(gs, org)
     exists = gs.values.map(&:id)
     (org..).lazy.find{|i| !exists.include?(i)}

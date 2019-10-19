@@ -19,6 +19,12 @@ module KOF
         group.regularize, user.regularize, email, abstract, dates.to_times, appendix
     end
 
+    def to_hyperlink(id)
+      dates.map do |d|
+        %Q|=HYPERLINK("#{[URL_BASE, id].join('/')}", "○")| if d
+      end
+    end
+
     attr_reader :group, :user, :email, :abstract, :dates
   end
 end

@@ -17,6 +17,10 @@ module KOF
       false
     end
 
+    def to_hyperlink
+      %Q|=HYPERLINK("#{url}", "#{title}")|
+    end
+
     def self.read(io)
       io.map{|l| l.strip.split(/\t/)}
         .map{|isbn, title, url, pub| KOF::Book.new(isbn, title, url, pub)}
@@ -107,8 +111,8 @@ if $0 == __FILE__
 
     def test_add_already_exists
       books = {
-        "9784774193977" => KOF::Book.new("9784774193977", "プロを目指す人のための Ruby 入門", "https://honto.jp/netstore/pd-book_28745880.html", "技術評論社"),
-        "9784862464149" => KOF::Book.new("9784862464149", "クリエイターのための権利の本",     "https://honto.jp/netstore/pd-book_29253824.html", " ボーンデジタル"),
+        "9784774193977" => KOF::Book.new("9784774193977", "プロを目指す人のための Ruby 入門", "https://honto.jp/netstore/pd-book_28745880.html", "技術評論社"),
+        "9784862464149" => KOF::Book.new("9784862464149", "クリエイターのための権利の本",     "https://honto.jp/netstore/pd-book_29253824.html", " ボーンデジタル"),
       }
 
       assert_not_equal "", books["9784774193977"].title
@@ -132,12 +136,12 @@ if $0 == __FILE__
   end
 end
 
-# >> Loaded suite /home/higaki/kof/KOFxJUNKUDO/KOF/xmpfilter.tmpfile_12013-1
+# >> Loaded suite -
 # >> Started
 # >> .......
-# >> Finished in 0.0017095 seconds.
+# >> Finished in 0.001361 seconds.
 # >> -------------------------------------------------------------------------------
 # >> 7 tests, 42 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 # >> 100% passed
 # >> -------------------------------------------------------------------------------
-# >> 4094.76 tests/s, 24568.59 assertions/s
+# >> 5143.28 tests/s, 30859.66 assertions/s

@@ -45,6 +45,7 @@ recommendations.each_with_index do |rec, i|
     group.name,
     booth ? booth.to_hyperlink(group.booth) : ["", ""],
     seminar ? seminar.to_hyperlink(group.seminar) : ["", ""],
+    rec.comment,
   ]
   puts columns.join("\t")
 end

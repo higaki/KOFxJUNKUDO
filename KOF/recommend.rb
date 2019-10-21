@@ -2,12 +2,12 @@
 
 module KOF
   class Recommendation
-    def initialize(gid, isbn, talker = nil, author = nil)
-      @gid, @isbn, @talker, @author =
-        gid.to_i, isbn.gsub('-', '').upcase, talker, author
+    def initialize(gid, isbn, talker = nil, author = nil, comment = nil)
+      @gid, @isbn, @talker, @author, @comment =
+        gid.to_i, isbn.gsub('-', '').upcase, talker, author, comment
     end
 
-    attr_accessor :gid, :isbn, :talker, :author
+    attr_accessor :gid, :isbn, :talker, :author, :comment
 
     def == o
       [gid, isbn, talker, author] == [o.gid, o.isbn, o.talker, o.author]
@@ -57,20 +57,20 @@ if $0 == __FILE__
     end
 
     def test_read_1recommendation
-      actual = KOF::Recommendation.read(StringIO.new("1\t9784774193977\tひがき\t"))
-      expectation = [KOF::Recommendation.new(1, "9784774193977", "ひがき", nil)]
+      actual = KOF::Recommendation.read(StringIO.new("1\t9784774193977\tひがき\t"))
+      expectation = [KOF::Recommendation.new(1, "9784774193977", "ひがき", nil)]
       assert_equal expectation, actual
     end
 
     def test_read_3recommendations
       src = [
-        [1, 9784774193977, "ひがき",   ""],
+        [1, 9784774193977, "ひがき",   ""],
         [2, 9784862464149, "古賀海人", "古賀海人"],
         [3, 9784904807002, "",         ""],
       ].map{|r| r.join("\t")}.join("\n")
       actual = KOF::Recommendation.read(StringIO.new(src))
       expectation = [
-        KOF::Recommendation.new(1, "9784774193977", "ひがき"),
+        KOF::Recommendation.new(1, "9784774193977", "ひがき"),
         KOF::Recommendation.new(2, "9784862464149", "古賀海人", "古賀海人"),
         KOF::Recommendation.new(3, "9784904807002"),
       ]
@@ -85,12 +85,12 @@ if $0 == __FILE__
   end
 end
 
-# >> Loaded suite /home/higaki/kof/KOFxJUNKUDO/KOF/xmpfilter.tmpfile_4258-1
+# >> Loaded suite -
 # >> Started
 # >> .....
-# >> Finished in 0.0010908 seconds.
+# >> Finished in 0.001546 seconds.
 # >> -------------------------------------------------------------------------------
 # >> 5 tests, 29 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 # >> 100% passed
 # >> -------------------------------------------------------------------------------
-# >> 4583.79 tests/s, 26585.99 assertions/s
+# >> 3234.15 tests/s, 18758.09 assertions/s

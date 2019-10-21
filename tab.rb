@@ -24,7 +24,7 @@ end
 
 def tr gname, books, even
   puts <<TR
-    <tr#{even ? '' : ' style="background:#fffee0;"'}>
+    <tr#{even ? '' : ' style="background:#f8d9b8;"'}>
       <td>#{gname}</td>
       <td>#{ul(books).join("<br>\n          ")}</td>
     </tr>
@@ -34,7 +34,7 @@ end
 puts <<HEAD
 <table>
   <thead>
-    <tr style="background:#fffacd;">
+    <tr style="background:#f2b579;">
       <th width="36%">団体名</th>
       <th>推薦書籍</th>
     </tr>

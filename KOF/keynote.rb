@@ -23,7 +23,7 @@ module KOF
     def to_hyperlink(id)
     end
 
-    attr_reader :group, :user, :email, :title, :talker, :dates
+    attr_reader :group, :user, :email, :title, :talker, :abstract, :dates
   end
 end
 

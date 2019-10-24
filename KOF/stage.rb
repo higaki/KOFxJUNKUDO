@@ -15,8 +15,8 @@ module KOF
     end
 
     def initialize(group, user, email, title, abstract, talker, preferred_date, scale, appendix, date, min)
-      @group, @user, @email, @title, @abstract, @talker, @preferred_date, @scale, @appendix, @dates, @min =
-        group.regularize, user.regularize, email, title, abstract, talker, preferred_date.to_times, scale, appendix, (date.to_times || [nil, nil]), min
+      @group, @user, @email, @title, @abstract, @talker, @preferred_date, @scale, @appendix, @dates =
+        group.regularize, user.regularize, email, title, abstract, talker, preferred_date.to_times, scale, appendix, ((date + min).to_times || [nil, nil])
     end
 
     def to_hyperlink(id)
@@ -25,7 +25,7 @@ module KOF
       end
     end
 
-    attr_reader :group, :user, :email, :title, :talker, :dates, :min
+    attr_reader :group, :user, :email, :title, :talker, :abstract, :dates
   end
 end
 
@@ -35,6 +35,6 @@ if $0 == __FILE__
   stages = KOF::Stage.open(ARGV[0])
 
   stages.each do |s|
-    p %i[group user email title talker dates min].map{|i| s.__send__(i)}
+    p %i[group user email title talker dates].map{|i| s.__send__(i)}
   end
 end

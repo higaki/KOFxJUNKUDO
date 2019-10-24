@@ -103,6 +103,9 @@ module KOF
       when /.*11月(\d+)日\s+(\d+)時/
         t = Time.local(2019, 11, $1.to_i, $2.to_i, 0, 0)
         t.mday == 8 ? [t, nil] : [nil, t]
+      when %r|11/0([89]) (\d+):(\d+)|
+        t = Time.local(2019, 11, $1.to_i, $2.to_i, $3.to_i, 0)
+        t.mday == 8 ? [t, nil] : [nil, t]
       when /両日|どちらの日でもよい/
         [8, 9].map{|i| Time.local(2019, 11, i, 0, 0, 0)}
       end

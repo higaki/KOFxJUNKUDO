@@ -7,9 +7,9 @@ require_relative './KOF/recommend'
 
 Encoding.default_external = Encoding::UTF_8
 
-groups = open(KOF::FILE_OF[:group]){|f| KOF::Group.read(f)}
+groups = open(KOF::FILE_OF[:group], **KOF::IO_ENCODINGS){|f| KOF::Group.read(f)}
   .values.inject({}){|gs, g| gs[g.id] = g; gs}
-books = open(KOF::FILE_OF[:book]){|f| KOF::Book.read(f)}
+books = open(KOF::FILE_OF[:book], **KOF::IO_ENCODINGS){|f| KOF::Book.read(f)}
 
 def li book
   case

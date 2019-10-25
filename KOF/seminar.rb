@@ -7,7 +7,7 @@ module KOF
 
   class Seminar
     def self.open(fn)
-      CSV.open(fn, IO_ENCODINGS) do |csv|
+      CSV.open(fn, **IO_ENCODINGS) do |csv|
         csv.inject([]) do |seminars, row|
           seminars << Seminar.new(*row)
         end

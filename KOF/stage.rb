@@ -7,7 +7,7 @@ module KOF
 
   class Stage
     def self.open(fn)
-      CSV.open(fn, IO_ENCODINGS) do |csv|
+      CSV.open(fn, **IO_ENCODINGS) do |csv|
         csv.drop(1).inject([]) do |stages, row|
           stages << Stage.new(*row)
         end

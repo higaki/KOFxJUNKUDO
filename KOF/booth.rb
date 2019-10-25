@@ -7,7 +7,7 @@ module KOF
 
   class Booth
     def self.open(fn)
-      CSV.open(fn, IO_ENCODINGS) do |csv|
+      CSV.open(fn, **IO_ENCODINGS) do |csv|
         csv.drop(1).inject([]) do |booths, row|
           booths << Booth.new(*row)
         end

@@ -110,6 +110,14 @@ module KOF
         [8, 9].map{|i| Time.local(2019, 11, i, 0, 0, 0)}
       end
     end
+
+    def isbn
+      case self
+      when /(\d{3})(\d)(\d{4})(\d{4})(\d)/ then [$1, $2, $3, $4, $5].join("-")
+      when /(\d{5})(\d{2})/                then [$1, $2            ].join("-")
+      else self
+      end
+    end
   end
 end
 

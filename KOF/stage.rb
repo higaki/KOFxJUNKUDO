@@ -21,7 +21,7 @@ module KOF
 
     def to_hyperlink(id)
       dates.map do |d|
-        %Q|=HYPERLINK("#{[URL_BASE, id].join('/')}", "#{d.strftim}")| if d
+        %Q|=HYPERLINK("#{[URL_BASE, id].join('/')}", "#{d.strftime('%H:%M')}")| if d
       end
     end
 
